@@ -185,4 +185,4 @@ If you are intending to use this dashboard commercially, your support is **expec
 
 ##
 
-Copyright © 2026 Hijel. Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+<br>
