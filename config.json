@@ -1,5 +1,6 @@
 {
   "repos": [
-    "owner/repo-name"
+    "HijelHub/HijelHID_BLEKeyboard",
+    "HijelHub/HijelHID_BLEMouse"
   ]
 }
