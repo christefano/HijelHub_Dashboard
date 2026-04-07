@@ -1,6 +1,6 @@
 {
   "repos": [
-    "HijelHub/HijelHID_Keyboard",
-    "HijelHub/HijelHID_Mouse"
+    "HijelHub/HijelHID_BLEKeyboard",
+    "HijelHub/HijelHID_BLEMouse"
   ]
 }
