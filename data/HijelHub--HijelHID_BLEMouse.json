@@ -1,0 +1,199 @@
+{
+  "format": "plaintext",
+  "repo": "HijelHub/HijelHID_BLEMouse",
+  "updated": "2026-04-07T06:44:55.458Z",
+  "forks": 0,
+  "data": {
+    "views": [
+      {
+        "date": "2026-03-24",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-03-25",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-03-26",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-03-27",
+        "count": 49,
+        "uniques": 14
+      },
+      {
+        "date": "2026-03-28",
+        "count": 38,
+        "uniques": 15
+      },
+      {
+        "date": "2026-03-29",
+        "count": 18,
+        "uniques": 6
+      },
+      {
+        "date": "2026-03-30",
+        "count": 30,
+        "uniques": 13
+      },
+      {
+        "date": "2026-03-31",
+        "count": 36,
+        "uniques": 12
+      },
+      {
+        "date": "2026-04-01",
+        "count": 43,
+        "uniques": 19
+      },
+      {
+        "date": "2026-04-02",
+        "count": 20,
+        "uniques": 10
+      },
+      {
+        "date": "2026-04-03",
+        "count": 32,
+        "uniques": 18
+      },
+      {
+        "date": "2026-04-04",
+        "count": 19,
+        "uniques": 6
+      },
+      {
+        "date": "2026-04-05",
+        "count": 16,
+        "uniques": 11
+      },
+      {
+        "date": "2026-04-06",
+        "count": 25,
+        "uniques": 17
+      }
+    ],
+    "clones": [
+      {
+        "date": "2026-03-24",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-03-25",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-03-26",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-03-27",
+        "count": 12,
+        "uniques": 12
+      },
+      {
+        "date": "2026-03-28",
+        "count": 1,
+        "uniques": 1
+      },
+      {
+        "date": "2026-03-29",
+        "count": 1,
+        "uniques": 1
+      },
+      {
+        "date": "2026-03-30",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-03-31",
+        "count": 1,
+        "uniques": 1
+      },
+      {
+        "date": "2026-04-01",
+        "count": 1,
+        "uniques": 1
+      },
+      {
+        "date": "2026-04-02",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-04-03",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-04-04",
+        "count": 1,
+        "uniques": 1
+      },
+      {
+        "date": "2026-04-05",
+        "count": 0,
+        "uniques": 0
+      },
+      {
+        "date": "2026-04-06",
+        "count": 1,
+        "uniques": 1
+      }
+    ],
+    "referrers": [
+      {
+        "referrer": "Google",
+        "count": 61,
+        "uniques": 8
+      },
+      {
+        "referrer": "reddit.com",
+        "count": 17,
+        "uniques": 8
+      },
+      {
+        "referrer": "github.com",
+        "count": 17,
+        "uniques": 7
+      },
+      {
+        "referrer": "Bing",
+        "count": 14,
+        "uniques": 4
+      },
+      {
+        "referrer": "DuckDuckGo",
+        "count": 3,
+        "uniques": 3
+      },
+      {
+        "referrer": "forum.arduino.cc",
+        "count": 3,
+        "uniques": 3
+      },
+      {
+        "referrer": "Yahoo",
+        "count": 1,
+        "uniques": 1
+      },
+      {
+        "referrer": "esp32.com",
+        "count": 1,
+        "uniques": 1
+      },
+      {
+        "referrer": "out.reddit.com",
+        "count": 1,
+        "uniques": 1
+      }
+    ]
+  }
+}
