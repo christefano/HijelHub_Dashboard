@@ -8,7 +8,7 @@ A self-hosted, static-site dashboard that aggregates GitHub traffic statistics (
 
 <br>
 
-![Dashboard Example](example.png)
+<img src="./example.png" width="1000">
 
 <br> 
 
@@ -105,8 +105,8 @@ Edit `theme.json` to change:
 - `title` — dashboard title (shown in header and browser tab)
 - `logo` — URL to a logo image (leave empty for default icon)
 - `defaultMode` — `"light"` or `"dark"` for first-time visitors
-- `defaultChartRange` — number of days to show in the initial chart viewport (e.g. `30`, `90`, `180`, `365`). Set to `0` to show all available data.
-- `dateFormat` — order of day/month/year in chart labels, tooltips, and CSV exports. Use any arrangement of the letters `D`, `M`, and `Y`: `"DMY"` (default, e.g. 06/04/26), `"MDY"` (e.g. 04/06/26), `"YMD"` (e.g. 26/04/06). This does not affect the "Updated" timestamp in the header.
+- `defaultChartRange` — number of days to show in the initial chart viewport (Default: 30 days). Set to `0` to show all available data.
+- `dateFormat` — order of day/month/year in chart labels, tooltips, and CSV exports. Use any arrangement of the letters `D`, `M`, and `Y`: `"DMY"` (default, e.g. 06/04/26), `"MDY"` (e.g. 04/06/26), `"YMD"` (e.g. 26/04/06).
 - `fonts` — heading, body, and monospace font families (any Google Fonts family)
 - `colors` — complete light and dark palettes
 
