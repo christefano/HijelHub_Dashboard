@@ -269,25 +269,27 @@ body {
 /* ── Tables ─────────────────────────────────────────────────────────────── */
 
 .tab-content {
-  max-height: 240px;
-  overflow-y: auto;
-  margin-right: -18px;
-  padding-right: 18px;
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
 }
 
-.ref-table { width: 100%; font-size: 13px; border-collapse: collapse; }
-
-.ref-table thead th {
+.ref-table-header {
+  display: flex; justify-content: space-between;
   font-size: 10px; font-family: var(--font-m);
   text-transform: uppercase; letter-spacing: 0.5px;
   color: var(--tx3); font-weight: 500;
   padding: 0 0 8px; border-bottom: 1px solid var(--border);
-  text-align: left;
-  position: sticky; top: 0; background: var(--bg);
-  z-index: 1;
+  flex-shrink: 0;
 }
 
-.ref-table thead th:last-child { text-align: right; }
+.ref-table-scroll {
+  max-height: 210px;
+  overflow-y: auto;
+}
+
+.ref-table { width: 100%; font-size: 13px; border-collapse: collapse; }
+
+.ref-table thead { display: none; }
 
 .ref-table td {
   padding: 5px 0; border-bottom: 1px solid var(--border);
@@ -297,6 +299,8 @@ body {
 .ref-table td:last-child {
   text-align: right; font-family: var(--font-m);
   font-size: 12px; color: var(--tx); font-weight: 500;
+}
+  padding-right: 12px;
 }
 
 .ref-table tbody tr:last-child td { border-bottom: none; }
