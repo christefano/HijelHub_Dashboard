@@ -1,0 +1,35 @@
+{
+  "title": "Traffic Dashboard",
+  "logo": "",
+  "defaultMode": "light",
+  "defaultChartRange": "1month",
+  "fonts": {
+    "heading": "DM Sans",
+    "body": "DM Sans",
+    "mono": "JetBrains Mono"
+  },
+  "colors": {
+    "light": {
+      "bg": "#ffffff",
+      "bgSecondary": "#f6f5f0",
+      "text": "#1a1917",
+      "textSecondary": "#6e6d68",
+      "accent": "#2563eb",
+      "accentSoft": "#dbeafe",
+      "border": "#e2e0d8",
+      "chartLine1": "#2563eb",
+      "chartLine2": "#a78bfa"
+    },
+    "dark": {
+      "bg": "#141413",
+      "bgSecondary": "#1e1e1c",
+      "text": "#e8e7e2",
+      "textSecondary": "#9c9b95",
+      "accent": "#60a5fa",
+      "accentSoft": "#1e3a5f",
+      "border": "#333330",
+      "chartLine1": "#60a5fa",
+      "chartLine2": "#c4b5fd"
+    }
+  }
+}
