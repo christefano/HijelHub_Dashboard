@@ -1,0 +1,54 @@
+# Copyright (c) 2026 Hijel. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, this software
+# is provided "AS IS", WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. The author(s) accept no liability for any damages,
+# loss, or consequences arising from the use or misuse of this software.
+# See the License for the full terms governing permissions and limitations.
+
+name: Collect Traffic Data
+
+on:
+  schedule:
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Fetch traffic data
+        env:
+          GHTRAFFIC_TOKEN: ${{ secrets.GHTRAFFIC_TOKEN }}
+        run: node scripts/fetch-traffic.js
+
+      - name: Encrypt data (if key exists)
+        if: env.ENCRYPT_KEY != ''
+        env:
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+        run: node scripts/encrypt.js
+
+      - name: Commit updated data
+        run: |
+          cd $GITHUB_WORKSPACE
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore: update traffic data [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            git push
+          fi
