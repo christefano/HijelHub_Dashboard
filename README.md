@@ -10,6 +10,10 @@ A self-hosted, static-site dashboard that aggregates GitHub traffic statistics (
 
 <img src="./example.png" width="1000">
 
+<br>
+
+### Use the password "guest" to view the demo at: [https://hijelhub.github.io/Demo_Dashboard/](https://hijelhub.github.io/Demo_Dashboard/)
+
 <br> 
 
 ## Why?
