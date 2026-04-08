@@ -1,5 +1,8 @@
 {
   "repos": [
-    "owner/repo-name"
+    "christefano/KanboardALTCHA",
+    "christefano/KanboardNotifyMe",
+    "christefano/wp-reverse-title",
+    "christefano/wp-etecf"
   ]
 }
