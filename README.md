@@ -8,11 +8,7 @@ A self-hosted, static-site dashboard that aggregates GitHub traffic statistics (
 
 <br>
 
-<img src="./example.png" width="1000">
-
-<br>
-
-### Use the password "guest" to view the demo at: [https://hijelhub.github.io/Demo_Dashboard/](https://hijelhub.github.io/Demo_Dashboard/)
+![Dashboard Example](example.png)
 
 <br> 
 
@@ -86,12 +82,19 @@ You can track any repo you have write access to, including repos in organization
 
 Your dashboard will be live at `https://your-username.github.io/HijelHub_Dashboard/` after a few minutes.
 
-### 6. Run the workflow
+### 6. Enable and run the workflow
 
-The workflow runs automatically every day at 23:00 UTC. To trigger it immediately:
+GitHub automatically disables scheduled workflows on forked repositories. You need to enable it manually:
 
-1. Go to **Actions** → **Collect Traffic Data**
-2. Click **Run workflow** → **Run workflow**
+1. Go to your forked repo → **Actions**
+2. You will see a banner saying "Workflows aren't being run on this forked repository." Click **I understand my workflows, go ahead and enable them**
+3. In the left sidebar, click **Collect Traffic Data**
+4. Click **Enable workflow** if prompted
+5. Click **Run workflow** → **Run workflow** to trigger the first data collection immediately
+
+After this, the workflow will run automatically every day at 23:00 UTC. Your first run may take a minute — check the Actions tab to confirm it completed successfully.
+
+> **Changing the schedule:** The default 23:00 UTC time captures a near-complete day of traffic data before the UTC midnight rollover. To change it, edit the `cron` line in `.github/workflows/collect-traffic.yml`. For example, `"0 5 * * *"` runs at 05:00 UTC daily. Use [crontab.guru](https://crontab.guru) to build your expression.
 
 ### 7. (Optional) Enable encryption
 
@@ -109,8 +112,8 @@ Edit `theme.json` to change:
 - `title` — dashboard title (shown in header and browser tab)
 - `logo` — URL to a logo image (leave empty for default icon)
 - `defaultMode` — `"light"` or `"dark"` for first-time visitors
-- `defaultChartRange` — number of days to show in the initial chart viewport (Default: 30 days). Set to `0` to show all available data.
-- `dateFormat` — order of day/month/year in chart labels, tooltips, and CSV exports. Use any arrangement of the letters `D`, `M`, and `Y`: `"DMY"` (default, e.g. 06/04/26), `"MDY"` (e.g. 04/06/26), `"YMD"` (e.g. 26/04/06).
+- `defaultChartRange` — number of days to show in the initial chart viewport (e.g. `30`, `90`, `180`, `365`). Set to `0` to show all available data.
+- `dateFormat` — order of day/month/year in chart labels, tooltips, and CSV exports. Use any arrangement of the letters `D`, `M`, and `Y`: `"DMY"` (default, e.g. 06/04/26), `"MDY"` (e.g. 04/06/26), `"YMD"` (e.g. 26/04/06). This does not affect the "Updated" timestamp in the header.
 - `fonts` — heading, body, and monospace font families (any Google Fonts family)
 - `colors` — complete light and dark palettes
 
