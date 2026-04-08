@@ -15,12 +15,15 @@
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 
 const TOKEN = process.env.GHTRAFFIC_TOKEN;
 if (!TOKEN) {
   console.log("No GHTRAFFIC_TOKEN set — skipping data collection.");
   process.exit(0);
 }
+
+const ENCRYPT_KEY = process.env.ENCRYPT_KEY || null;
 
 const CONFIG_PATH = path.join(__dirname, "..", "config.json");
 const DATA_DIR = path.join(__dirname, "..", "data");
@@ -62,6 +65,29 @@ function apiGet(endpoint) {
     req.on("error", reject);
     req.end();
   });
+}
+
+// ── Decrypt helper ───────────────────────────────────────────────────────────
+
+const ITERATIONS = 100000;
+const KEY_LENGTH = 32;
+
+function decryptData(ciphertextB64, ivB64, saltB64, password) {
+  const salt = Buffer.from(saltB64, "base64");
+  const iv = Buffer.from(ivB64, "base64");
+  const ciphertextWithTag = Buffer.from(ciphertextB64, "base64");
+
+  const authTag = ciphertextWithTag.subarray(ciphertextWithTag.length - 16);
+  const ciphertext = ciphertextWithTag.subarray(0, ciphertextWithTag.length - 16);
+
+  const key = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, "sha256");
+
+  const decipher = crypto.createDecipheriv("aes-256-gcm", key, iv);
+  decipher.setAuthTag(authTag);
+  let decrypted = decipher.update(ciphertext);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+  return decrypted.toString("utf8");
 }
 
 // ── Merge helpers ────────────────────────────────────────────────────────────
@@ -116,8 +142,19 @@ async function processRepo(repoFullName) {
     try {
       const raw = JSON.parse(fs.readFileSync(filepath, "utf8"));
       if (raw.format === "encrypted") {
-        console.log("  ⚠  Encrypted file detected — cannot merge without key. Skipping merge, will overwrite data portion.");
-        existing = { data: { views: [], clones: [], referrers: [] } };
+        if (ENCRYPT_KEY) {
+          try {
+            const decryptedJson = decryptData(raw.ciphertext, raw.iv, raw.salt, ENCRYPT_KEY);
+            existing = { data: JSON.parse(decryptedJson) };
+            console.log("  ✓  Decrypted existing data for merge.");
+          } catch {
+            console.log("  ⚠  Could not decrypt existing data — wrong key? Starting fresh.");
+            existing = { data: { views: [], clones: [], referrers: [] } };
+          }
+        } else {
+          console.log("  ⚠  Encrypted file detected but no ENCRYPT_KEY set — cannot merge. Starting fresh.");
+          existing = { data: { views: [], clones: [], referrers: [] } };
+        }
       } else {
         existing = raw;
       }
@@ -127,13 +164,14 @@ async function processRepo(repoFullName) {
   }
 
   // Fetch from API
-  let repoMeta, views, clones, referrers;
+  let repoMeta, views, clones, referrers, releases;
   try {
-    [repoMeta, views, clones, referrers] = await Promise.all([
+    [repoMeta, views, clones, referrers, releases] = await Promise.all([
       apiGet(`/repos/${owner}/${repo}`),
       apiGet(`/repos/${owner}/${repo}/traffic/views`),
       apiGet(`/repos/${owner}/${repo}/traffic/clones`),
       apiGet(`/repos/${owner}/${repo}/traffic/popular/referrers`),
+      apiGet(`/repos/${owner}/${repo}/releases`),
     ]);
   } catch (err) {
     console.error(`  ✗  API error for ${repoFullName}: ${err.message}`);
@@ -143,7 +181,16 @@ async function processRepo(repoFullName) {
   console.log(`  Views: ${views.count} total, ${views.uniques} unique (${views.views?.length || 0} days)`);
   console.log(`  Clones: ${clones.count} total, ${clones.uniques} unique (${clones.clones?.length || 0} days)`);
   console.log(`  Referrers: ${referrers.length} sources`);
+  console.log(`  Releases: ${Array.isArray(releases) ? releases.length : 0} found`);
   console.log(`  Forks: ${repoMeta.forks_count}`);
+
+  // Build releases summary (tag + total download count across all assets)
+  const releaseSummary = Array.isArray(releases)
+    ? releases.map((r) => ({
+        tag: r.tag_name,
+        downloads: (r.assets || []).reduce((sum, a) => sum + (a.download_count || 0), 0),
+      }))
+    : [];
 
   // Merge
   const mergedData = {
@@ -155,6 +202,7 @@ async function processRepo(repoFullName) {
       views: mergeDailyData(existing.data.views || [], views.views || []),
       clones: mergeDailyData(existing.data.clones || [], clones.clones || []),
       referrers: mergeReferrers(existing.data.referrers || [], referrers || []),
+      releases: releaseSummary,
     },
   };
 
