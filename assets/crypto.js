@@ -68,6 +68,8 @@ const DashCrypto = (() => {
       repo: fileObj.repo,
       updated: fileObj.updated,
       forks: fileObj.forks,
+      issues: fileObj.issues,
+      pullRequests: fileObj.pullRequests,
       data: JSON.parse(dataJson),
     };
   }

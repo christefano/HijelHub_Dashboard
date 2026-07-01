@@ -39,6 +39,9 @@ This dashboard solves all these problems using only GitHub's free tier: Actions,
 
 ## Quick Setup
 
+> [!NOTE]
+> Setup Instructions assume you are working via the GitHub Web Interface.
+
 ### 1. Fork this repository
 
 Click **Fork** on the [original repository](https://github.com/HijelHub/HijelHub_Dashboard). Do NOT fork from anyone else's copy.

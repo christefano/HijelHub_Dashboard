@@ -114,6 +114,8 @@ function processFile(filepath) {
     repo: raw.repo,
     updated: raw.updated,
     forks: raw.forks,
+    issues: raw.issues,
+    pullRequests: raw.pullRequests,
     iv,
     salt,
     ciphertext,
