@@ -1,8 +1,10 @@
 {
   "repos": [
+    "christefano/gusto_ical_cleaner_upper"
     "christefano/KanboardALTCHA",
     "christefano/KanboardNotifyMe",
     "christefano/wp-reverse-title",
     "christefano/wp-etecf"
+    "christefano/wps-subscriptions-extra"   
   ]
 }
