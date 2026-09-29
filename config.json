@@ -6,6 +6,8 @@
     "christefano/wp-reverse-title",
     "christefano/wp-etecf",
     "christefano/wp-etr",
+    "christefano/kanai-afm-bridge",
+    "christefano/postbird-for-macos",
     "christefano/wp-tournament-manager",
     "christefano/wps-subscriptions-extra"
   ]
