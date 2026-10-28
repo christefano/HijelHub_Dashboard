@@ -398,8 +398,21 @@ const App = (() => {
         let rows = "";
         for (const r of releases) {
           rows += `<tr><td>${esc(r.tag)}</td><td>${fmt(r.downloads)}</td></tr>`;
+          for (const a of r.assets || []) {
+            rows += `<tr class="asset-row"><td style="padding-left:20px;opacity:.75">${esc(a.name)}</td><td style="opacity:.75">${fmt(a.downloads)}</td></tr>`;
+          }
         }
-        container.innerHTML = `<div class="ref-scroll-container"><table class="ref-table"><thead><tr><th>Release</th><th>Downloads</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        const history = data.data.downloadHistory || [];
+        let summary = "";
+        if (history.length > 0) {
+          const last = history[history.length - 1];
+          const cutoff = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
+          const base = history.filter((p) => p.date <= cutoff).pop() || history[0];
+          const delta = last.total - base.total;
+          const note = base.date === last.date ? "" : ` · ${delta >= 0 ? "+" : ""}${fmt(delta)} since ${esc(base.date)}`;
+          summary = `<div class="card-sub"><strong>${fmt(last.total)}</strong> total · <strong>${fmt(last.zip)}</strong> zip${note}</div>`;
+        }
+        container.innerHTML = `${summary}<div class="ref-scroll-container"><table class="ref-table"><thead><tr><th>Release / file</th><th>Downloads</th></tr></thead><tbody>${rows}</tbody></table></div>`;
       }
     }
   }

@@ -203,13 +203,35 @@ async function processRepo(repoFullName) {
   console.log(`  PRs: ${mergedPRs} merged, ${openPRs} open`);
   console.log(`  Forks: ${repoMeta.forks_count}`);
 
-  // Build releases summary (tag + total download count across all assets)
+  // Build releases summary (tag + per-asset download counts)
   const releaseSummary = Array.isArray(releases)
-    ? releases.map((r) => ({
-        tag: r.tag_name,
-        downloads: (r.assets || []).reduce((sum, a) => sum + (a.download_count || 0), 0),
-      }))
+    ? releases.map((r) => {
+        const assets = (r.assets || []).map((a) => ({
+          name: a.name,
+          downloads: a.download_count || 0,
+        }));
+        return {
+          tag: r.tag_name,
+          downloads: assets.reduce((sum, a) => sum + a.downloads, 0),
+          assets,
+        };
+      })
     : [];
+
+  // One history point per day: all downloads and zip-only downloads
+  const allAssets = releaseSummary.flatMap((r) => r.assets);
+  const todayPoint = {
+    date: new Date().toISOString().slice(0, 10),
+    total: allAssets.reduce((sum, a) => sum + a.downloads, 0),
+    zip: allAssets
+      .filter((a) => /\.zip$/i.test(a.name))
+      .reduce((sum, a) => sum + a.downloads, 0),
+  };
+  const downloadHistory = (existing.data.downloadHistory || []).filter(
+    (p) => p.date !== todayPoint.date
+  );
+  downloadHistory.push(todayPoint);
+  downloadHistory.sort((a, b) => a.date.localeCompare(b.date));
 
   // Merge
   const mergedData = {
@@ -224,6 +246,7 @@ async function processRepo(repoFullName) {
       clones: mergeDailyData(existing.data.clones || [], clones.clones || []),
       referrers: mergeReferrers(existing.data.referrers || [], referrers || []),
       releases: releaseSummary,
+      downloadHistory,
     },
   };
 
